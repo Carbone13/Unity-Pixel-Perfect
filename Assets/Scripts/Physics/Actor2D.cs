@@ -6,6 +6,7 @@ public abstract class Actor2D : MonoBehaviour
     [HideInInspector]
     public AABB hitbox;
 
+    [SerializeField]
     private Vector2 remainder;
     
     private void Awake ()
@@ -22,7 +23,8 @@ public abstract class Actor2D : MonoBehaviour
     private void MoveX (float amount, Action onCollide)
     {
         remainder.x += amount;
-        int toMove = remainder.x < 0 ? (int)Mathf.Ceil(remainder.x) : (int)Mathf.Floor(remainder.x);
+        // We round our remainder to the lowest integer, which is done by simply casting it into an integer (it remove the decimal part)
+        int toMove = (int) remainder.x;
 
         if (toMove != 0)
         {
@@ -48,7 +50,7 @@ public abstract class Actor2D : MonoBehaviour
     public void MoveY (float amount, Action onCollide)
     {
         remainder.y += amount;
-        int toMove = remainder.y < 0 ? (int)Mathf.Ceil(remainder.y) : (int)Mathf.Floor(remainder.y);
+        int toMove = (int) remainder.y;
 
         if (toMove != 0)
         {

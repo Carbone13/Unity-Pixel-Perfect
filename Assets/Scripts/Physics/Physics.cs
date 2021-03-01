@@ -13,7 +13,7 @@ public static class Physics
     // Basic function, called by an AABB, it loops through every AABB and return true
     // if we collide with at least one of them
     // We can input an offset, it will modify the AABB position
-    public static AABB CollideAt (this AABB _caller, Vector2? offset = null)
+    public static AABB CollideAt (this AABB _caller, Vector2? position = null)
     {
         // Loop through every registered AABBs
         foreach (AABB box in boxes)
@@ -22,7 +22,7 @@ public static class Physics
             if (box != _caller && box.isActive)
             {
                 // ... and we overlap it
-                if (_caller.OverlapWith(box, offset))
+                if (_caller.OverlapWith(box, position))
                 {
                     // we hit someone Sir !
                     return box;

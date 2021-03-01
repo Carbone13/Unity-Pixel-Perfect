@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
+// Simple bounding boxes
+// Use Corner Coordinate System, meaning that the pivot is at the upper left edge and not at the center as the BoxCollider2D
 public class AABB : MonoBehaviour
 {
     // Editor variable, a size and an offset
@@ -13,7 +15,7 @@ public class AABB : MonoBehaviour
     public Color debugColor;
 
     // Return the position in the scene
-    public Vector2 position => transform.position + new Vector3(offset.x, offset.y, 0);
+    public Vector2 position => (Vector2)transform.position - sceneSize / 2 + offset;
     // Return the size according to our scale
     public Vector2 sceneSize => size * transform.lossyScale;
 
@@ -28,21 +30,21 @@ public class AABB : MonoBehaviour
     // This basic function return a bool if we overlap (= collide) with other
     // We can provide a positionOffset to offset us
     // The rest of the function is just mathematical formula
-    public bool OverlapWith (AABB other, Vector2? _positionOffset = null)
+    public bool OverlapWith (AABB other, Vector2? _positionOverwrite = null)
     {
         float x, y;
-        
-        if (_positionOffset == null)
+
+        if (_positionOverwrite == null)
         {
-            x = Math.Abs(position.x - other.position.x);
-            y = Math.Abs(position.y - other.position.y);
+            x = Math.Abs((position.x + sceneSize.x / 2) - (other.position.x + other.sceneSize.x / 2));
+            y = Math.Abs((position.y + sceneSize.y / 2) - (other.position.y + other.sceneSize.y / 2));
         }
         else
         {
-            Vector2 _offset = (Vector2) _positionOffset;
+            Vector2 positionOverwrite = (Vector2) _positionOverwrite;
             
-            x = Math.Abs(position.x + _offset.x - other.position.x);
-            y = Math.Abs(position.y + _offset.y - other.position.y);
+            x = Math.Abs((positionOverwrite.x + sceneSize.x / 2) - (other.position.x + other.sceneSize.x / 2));
+            y = Math.Abs((positionOverwrite.y + sceneSize.y / 2) - (other.position.y + other.sceneSize.y / 2));
         }
         
         bool xCheck = x * 2 < (sceneSize.x + other.sceneSize.x);
@@ -60,19 +62,20 @@ public class AABB : MonoBehaviour
     {
         this.UnregisterBox();
     }
-    
+
+    public AABB toCheck;
+
+    private void Update ()
+    {
+       // if(toCheck != null) print(OverlapWith(toCheck));
+    }
+
     private void OnDrawGizmos ()
     {
         if (debug)
         {
-            Color alterned = debugColor;
-            alterned.a = 0.3f;
-            
-            Gizmos.color = alterned;
-            Gizmos.DrawCube(position, sceneSize);
-
             Gizmos.color = debugColor;
-            Gizmos.DrawWireCube(position, sceneSize);
+            Gizmos.DrawWireCube(position + (sceneSize / 2), sceneSize);
         }
     }
 }
