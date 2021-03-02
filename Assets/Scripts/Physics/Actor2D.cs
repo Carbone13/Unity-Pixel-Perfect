@@ -79,7 +79,7 @@ public abstract class Actor2D : MonoBehaviour
     
     public void ClearRemainderY ()
     {
-        remainder.x = 0;
+        remainder.y = 0;
     }
     
     private void OnEnable ()
