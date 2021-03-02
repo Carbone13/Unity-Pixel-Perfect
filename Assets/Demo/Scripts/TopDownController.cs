@@ -1,7 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using C13.Physics;
+using System;
 
-public class Player : Actor2D
+public class TopDownController : Actor2D
 {
     public float MoveSpeed = 50.0f;
     
@@ -17,6 +18,10 @@ public class Player : Actor2D
         Move(velocity);
     }
 
+    
+    
+    
+    
     // In this example, we are considered as Riding the solid when On Top of It
     public override bool isRiding (Solid2D solid)
     {
@@ -29,7 +34,7 @@ public class Player : Actor2D
         return (Math.Abs(hitbox.Bottom - solid.hitbox.Top) == 0) && !isAtLeft && !isAtRight;
     }
 
-    public override void Squish ()
+    public override void Squish (int direction)
     {
         print("squish");
     }
