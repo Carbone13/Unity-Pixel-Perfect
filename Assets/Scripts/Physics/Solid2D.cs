@@ -57,13 +57,16 @@ public abstract class Solid2D : MonoBehaviour
             {
                 if (hitbox.OverlapWith(actor.hitbox))
                 {
+                    actor.ClearRemainderX();
+                    
                     if(toMove > 0)
-                        actor.MoveX(hitbox.Right - actor.hitbox.Left, actor.Squish, true);
+                        actor.MoveX(hitbox.Right - actor.hitbox.Left, actor.Squish);
                     else
-                        actor.MoveX(hitbox.Left - actor.hitbox.Right, actor.Squish, true);
+                        actor.MoveX(hitbox.Left - actor.hitbox.Right, actor.Squish);
                 }
                 else if (riders.Contains(actor))
                 {
+                    actor.ClearRemainderX();
                     actor.MoveX(toMove, null);
                 }
             }
@@ -84,6 +87,8 @@ public abstract class Solid2D : MonoBehaviour
             {
                 if (hitbox.OverlapWith(actor.hitbox))
                 {
+                    actor.ClearRemainderY();
+                    
                     if(toMove > 0)
                         actor.MoveY(hitbox.Bottom - actor.hitbox.Top, actor.Squish);
                     else
@@ -91,6 +96,7 @@ public abstract class Solid2D : MonoBehaviour
                 }
                 else if (riders.Contains(actor))
                 {
+                    actor.ClearRemainderX();
                     actor.MoveY(toMove, null);
                 }
             }

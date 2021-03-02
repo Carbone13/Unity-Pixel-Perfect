@@ -20,15 +20,13 @@ public abstract class Actor2D : MonoBehaviour
         MoveY(amount.y, yCollideCallback);
     }
     
-    public void MoveX (float amount, Action onCollide, bool debug = false)
+    public void MoveX (float amount, Action onCollide)
     {
-        float previous = remainder.x;
         remainder.x += amount;
-        float mid = remainder.x;
+
         // We round our remainder to the lowest integer, which is done by simply casting it into an integer (it remove the decimal part)
         int toMove = (int) remainder.x;
-        float moved = toMove;
-        
+
         if (toMove != 0)
         {
             int sign = Math.Sign(toMove);
@@ -47,12 +45,6 @@ public abstract class Actor2D : MonoBehaviour
                     break;
                 }
             }
-        }
-
-        if (debug)
-        {
-            print("Moved by " + (float)moved + " pixels. " + "Remainder was at " + (float)previous + " went to " + (float)mid + " now at " + (float)remainder.x);
-
         }
     }
     
@@ -82,6 +74,16 @@ public abstract class Actor2D : MonoBehaviour
         }
     }
 
+    public void ClearRemainderX ()
+    {
+        remainder.x = 0;
+    }
+    
+    public void ClearRemainderY ()
+    {
+        remainder.x = 0;
+    }
+    
     private void OnEnable ()
     {
         this.RegisterActor();
