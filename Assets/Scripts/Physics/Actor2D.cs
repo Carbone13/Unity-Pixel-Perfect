@@ -14,14 +14,15 @@ public abstract class Actor2D : MonoBehaviour
         hitbox = GetComponent<AABB>();
     }
 
-    public void Move (Vector2 amount, Action xCollideCallback = null, Action yCollideCallback = null)
+    protected void Move (Vector2 amount, Action xCollideCallback = null, Action yCollideCallback = null)
     {
         MoveX(amount.x, xCollideCallback);
         MoveY(amount.y, yCollideCallback);
     }
     
-    private void MoveX (float amount, Action onCollide)
+    public void MoveX (float amount, Action onCollide, bool debug = false)
     {
+        float previous = remainder.x;
         remainder.x += amount;
         // We round our remainder to the lowest integer, which is done by simply casting it into an integer (it remove the decimal part)
         int toMove = (int) remainder.x;
@@ -44,6 +45,12 @@ public abstract class Actor2D : MonoBehaviour
                     break;
                 }
             }
+        }
+
+        if (debug)
+        {
+            print("Moved by " + toMove + " pixels. " + "Remainder was at " + previous + " now at " + remainder.x);
+
         }
     }
     

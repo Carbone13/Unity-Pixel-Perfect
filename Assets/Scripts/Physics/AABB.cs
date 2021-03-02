@@ -6,8 +6,8 @@ using UnityEngine;
 public class AABB : MonoBehaviour
 {
     // Editor variable, a size and an offset
-    public Vector2 offset;
-    public Vector2 size = new Vector2(1, 1);
+    public Vector2Int offset;
+    public Vector2Int size = new Vector2Int(1, 1);
     public bool isActive = true;
 
     // Used to show the box in the editor
@@ -15,16 +15,16 @@ public class AABB : MonoBehaviour
     public Color debugColor;
 
     // Return the position in the scene
-    public Vector2 position => (Vector2)transform.position - sceneSize / 2 + offset;
+    public Vector2 position => (Vector2)transform.position + offset;
     // Return the size according to our scale
-    public Vector2 sceneSize => size * transform.lossyScale;
+    public Vector2 sceneSize => (Vector2)size * transform.lossyScale;
 
     // These functions return edge
     // It is similar to Bounds.min/max
-    public float Left => position.x - sceneSize.x / 2;
-    public float Right => position.x + sceneSize.x / 2;
-    public float Top => position.y + sceneSize.y / 2;
-    public float Bottom => position.y - sceneSize.y / 2;
+    public float Left => position.x;
+    public float Right => position.x + sceneSize.x;
+    public float Top => position.y + sceneSize.y ;
+    public float Bottom => position.y;
 
     
     // This basic function return a bool if we overlap (= collide) with other
@@ -75,7 +75,7 @@ public class AABB : MonoBehaviour
         if (debug)
         {
             Gizmos.color = debugColor;
-            Gizmos.DrawWireCube(position + (sceneSize / 2), sceneSize);
+            Gizmos.DrawWireCube(position + sceneSize / 2, sceneSize);
         }
     }
 }
