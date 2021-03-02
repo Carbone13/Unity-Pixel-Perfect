@@ -24,9 +24,11 @@ public abstract class Actor2D : MonoBehaviour
     {
         float previous = remainder.x;
         remainder.x += amount;
+        float mid = remainder.x;
         // We round our remainder to the lowest integer, which is done by simply casting it into an integer (it remove the decimal part)
         int toMove = (int) remainder.x;
-
+        float moved = toMove;
+        
         if (toMove != 0)
         {
             int sign = Math.Sign(toMove);
@@ -49,7 +51,7 @@ public abstract class Actor2D : MonoBehaviour
 
         if (debug)
         {
-            print("Moved by " + toMove + " pixels. " + "Remainder was at " + previous + " now at " + remainder.x);
+            print("Moved by " + (float)moved + " pixels. " + "Remainder was at " + (float)previous + " went to " + (float)mid + " now at " + (float)remainder.x);
 
         }
     }
@@ -58,7 +60,7 @@ public abstract class Actor2D : MonoBehaviour
     {
         remainder.y += amount;
         int toMove = (int) remainder.y;
-
+        
         if (toMove != 0)
         {
             int sign = Math.Sign(toMove);
