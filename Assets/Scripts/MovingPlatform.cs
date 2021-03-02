@@ -11,16 +11,10 @@ public class MovingPlatform : Solid2D
 
     public float speed;
     public bool cyclic;
-    public float waitTime;
-    [Range(0,2)]
-    public float easeAmount;
 
-    int fromWaypointIndex;
-    float percentBetweenWaypoints;
-    float nextMoveTime;
+    private int fromWaypointIndex;
+    private int toWaypointIndex;
 
-    private int fromWaypointID;
-    private float travellingPercent;
     
     private void Start ()
     {
@@ -32,13 +26,28 @@ public class MovingPlatform : Solid2D
 
     }
 
-    private int dir = 1;
     private void Update ()
     {
-        Move(Vector2.right * speed * dir * Time.deltaTime);
+        fromWaypointIndex %= globalWaypoints.Length;
+        toWaypointIndex = (fromWaypointIndex + 1) % globalWaypoints.Length;
 
-        if (transform.position.x >= 100) dir = -1;
-        if (transform.position.x <= -100) dir = 1;
+        Vector2 dir = (globalWaypoints[toWaypointIndex] - globalWaypoints[fromWaypointIndex]).normalized;
+
+        Move(dir * speed * Time.deltaTime);
+
+        if (transform.position == globalWaypoints[toWaypointIndex])
+        {
+            ClearRemainder();
+            fromWaypointIndex ++;
+
+            if (!cyclic) 
+            {
+                if (fromWaypointIndex >= globalWaypoints.Length-1) {
+                    fromWaypointIndex = 0;
+                    Array.Reverse(globalWaypoints);
+                }
+            }
+        }
     }
 
     private void OnDrawGizmos ()

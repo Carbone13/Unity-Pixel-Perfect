@@ -34,24 +34,17 @@ public abstract class Solid2D : MonoBehaviour
         
         // We deactivate collision detection so Actor2D won't get stuck on us
         hitbox.isActive = false;
+
+        remainder.x += amount.x;
+        remainder.y += amount.y;
         
-        MoveX(amount.x, riders);
-        MoveY(amount.y, riders);
-
-        // Now we reactivate collisions
-        hitbox.isActive = true;
-    }
-
-    private void MoveX (float amount, ICollection<Actor2D> riders)
-    {
-        remainder.x += amount;
-        int toMove = (int) remainder.x;
-        print(toMove);
-        if (toMove != 0)
+        int toMoveX = (int) remainder.x;
+        int toMoveY = (int) remainder.y;
+        
+        if (toMoveX != 0)
         {
-            print(toMove);
-            remainder.x -= toMove;
-            transform.position = new Vector2(transform.position.x + toMove, transform.position.y);
+            remainder.x -= toMoveX;
+            transform.position = new Vector2(transform.position.x + toMoveX, transform.position.y);
 
             foreach(Actor2D actor in Physics.actors)
             {
@@ -59,7 +52,7 @@ public abstract class Solid2D : MonoBehaviour
                 {
                     actor.ClearRemainderX();
                     
-                    if(toMove > 0)
+                    if(toMoveX > 0)
                         actor.MoveX(hitbox.Right - actor.hitbox.Left, actor.Squish);
                     else
                         actor.MoveX(hitbox.Left - actor.hitbox.Right, actor.Squish);
@@ -67,21 +60,15 @@ public abstract class Solid2D : MonoBehaviour
                 else if (riders.Contains(actor))
                 {
                     actor.ClearRemainderX();
-                    actor.MoveX(toMove, null);
+                    actor.MoveX(toMoveX, null);
                 }
             }
         }
-    }
-    
-    private void MoveY (float amount, ICollection<Actor2D> riders)
-    {
-        remainder.y += amount;
-        int toMove = (int) remainder.y;
-
-        if (toMove != 0)
+        
+        if (toMoveY != 0)
         {
-            remainder.y -= toMove;
-            transform.position = new Vector2(transform.position.x, transform.position.y + toMove);
+            remainder.y -= toMoveY;
+            transform.position = new Vector2(transform.position.x, transform.position.y + toMoveY);
 
             foreach(Actor2D actor in Physics.actors)
             {
@@ -89,17 +76,25 @@ public abstract class Solid2D : MonoBehaviour
                 {
                     actor.ClearRemainderY();
                     
-                    if(toMove > 0)
-                        actor.MoveY(hitbox.Bottom - actor.hitbox.Top, actor.Squish);
-                    else
+                    if(toMoveY > 0)
                         actor.MoveY(hitbox.Top - actor.hitbox.Bottom, actor.Squish);
+                    else
+                        actor.MoveY(hitbox.Bottom - actor.hitbox.Top, actor.Squish);
                 }
                 else if (riders.Contains(actor))
                 {
-                    actor.ClearRemainderX();
-                    actor.MoveY(toMove, null);
+                    actor.ClearRemainderY();
+                    actor.MoveY(toMoveY, null);
                 }
             }
         }
+
+        // Now we reactivate collisions
+        hitbox.isActive = true;
+    }
+    
+    protected void ClearRemainder ()
+    {
+        remainder = Vector2.zero;
     }
 }

@@ -63,13 +63,6 @@ public class AABB : MonoBehaviour
         this.UnregisterBox();
     }
 
-    public AABB toCheck;
-
-    private void Update ()
-    {
-       // if(toCheck != null) print(OverlapWith(toCheck));
-    }
-
     private void OnDrawGizmos ()
     {
         if (debug)

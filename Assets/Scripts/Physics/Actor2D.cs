@@ -23,8 +23,6 @@ public abstract class Actor2D : MonoBehaviour
     public void MoveX (float amount, Action onCollide)
     {
         remainder.x += amount;
-
-        // We round our remainder to the lowest integer, which is done by simply casting it into an integer (it remove the decimal part)
         int toMove = (int) remainder.x;
 
         if (toMove != 0)
