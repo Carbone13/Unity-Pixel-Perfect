@@ -5,66 +5,43 @@ using System;
 public class PlatformerController : Actor2D
 {
     public float MoveSpeed = 50f;
-    public float RunAccelerationTime = 0.2f;
     public float JumpHeight;
     public float JumpApexTime;
-    public float MinJumpHeight;
-    public float coyoteTime;
-    
+
     private float gravity;
     private float jumpVelocity;
-    private float terminalVelocity;
-    private float gravityScale = 1;
-    private float lastGrounded;
 
     [Space]
     public Vector2 velocity;
     public bool isGrounded;
     public float xInput;
 
-    private float xVelocitySmoothing;
     
     public override void Awake ()
     {
         base.Awake();
         CalculatePhysicConstants();
     }
-
+    
     private void Update ()
     {
-        float previousY = velocity.y;
         xInput = Input.GetAxisRaw("Horizontal");
-        velocity.x = Mathf.SmoothDamp(velocity.x, xInput * MoveSpeed, ref xVelocitySmoothing, RunAccelerationTime);
+        velocity.x = xInput * MoveSpeed;
         
-        if (Input.GetButtonDown("Jump") && ( (Time.time - lastGrounded) <= coyoteTime || isGrounded))
-        {
-            velocity.y = jumpVelocity;
-        }
-        else if(!isGrounded)
-        {
-            velocity.y -= gravity * Time.deltaTime * gravityScale;
-        }
-
-        if (velocity.y < 0 && previousY > 0)
-        {
-            print("Reached apex at y: " + transform.position.y);
-        }
-        
-        if (Input.GetButtonUp("Jump"))
-        {
-            if (velocity.y > terminalVelocity) velocity.y = terminalVelocity;
-        }
-
-
-        Vector2Int movedThisFrame = Move(velocity * Time.deltaTime, OnCollideX, OnCollideY);
-        
-        // TODO this is not good at all
-        if (remainder.y > 0)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             isGrounded = false;
+            velocity.y = jumpVelocity;
+        }
+        
+        if(!isGrounded)
+        {
+            velocity.y -= gravity * Time.deltaTime;
         }
 
-        if (isGrounded) lastGrounded = Time.time;
+        Move(velocity * Time.deltaTime, OnCollideX, OnCollideY);
+
+        if (!hitbox.CollideAt(hitbox.position - new Vector2(0, 1))) isGrounded = false;
     }
     
     
@@ -90,7 +67,6 @@ public class PlatformerController : Actor2D
         gravity = (2 * JumpHeight) / (float)(Math.Pow(JumpApexTime, 2));
 
         jumpVelocity = (float)Math.Sqrt(2 * gravity * JumpHeight);
-        terminalVelocity = (float) Math.Sqrt(Math.Pow(jumpVelocity, 2) + 2 * gravity *  -1f * (JumpHeight - MinJumpHeight));
     }
     
     public override bool isRiding (Solid2D solid)
@@ -107,5 +83,6 @@ public class PlatformerController : Actor2D
     public override void Squish (int direction)
     {
         print("Squished");
+        transform.position = new Vector2(0, -25);
     }
 }

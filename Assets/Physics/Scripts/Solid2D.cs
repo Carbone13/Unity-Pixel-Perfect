@@ -38,8 +38,8 @@ namespace C13.Physics
             remainder.x += amount.x;
             remainder.y += amount.y;
 
-            int toMoveX = (int) remainder.x;
-            int toMoveY = (int) remainder.y;
+            int toMoveX = Mathf.RoundToInt(remainder.x);
+            int toMoveY = Mathf.RoundToInt(remainder.y);
 
             if (toMoveX != 0)
             {

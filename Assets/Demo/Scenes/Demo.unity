@@ -443,7 +443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550007076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: -25, z: 0}
+  m_LocalPosition: {x: 0, y: -25, z: 0}
   m_LocalScale: {x: 10, y: 22, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -496,11 +496,8 @@ MonoBehaviour:
   hitbox: {fileID: 0}
   remainder: {x: 0, y: 0}
   MoveSpeed: 50
-  RunAccelerationTime: 0
   JumpHeight: 50
   JumpApexTime: 0.3
-  MinJumpHeight: 30
-  coyoteTime: 0.2
   velocity: {x: 0, y: 0}
   isGrounded: 0
   xInput: 0
@@ -598,7 +595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667086665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 95, y: -33, z: 0}
+  m_LocalPosition: {x: 94, y: -33, z: 0}
   m_LocalScale: {x: 10, y: 14, z: 1}
   m_Children: []
   m_Father: {fileID: 52836725}

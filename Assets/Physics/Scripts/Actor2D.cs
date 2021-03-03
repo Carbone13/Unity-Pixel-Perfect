@@ -16,20 +16,16 @@ namespace C13.Physics
         }
 
         // Return what we actually moved
-        protected Vector2Int Move (Vector2 amount, Action<int> xCollideCallback = null, Action<int> yCollideCallback = null)
+        protected void Move (Vector2 amount, Action<int> xCollideCallback = null, Action<int> yCollideCallback = null)
         {
-            Vector2Int moved = Vector2Int.zero;
-            
-            moved.x = MoveX(amount.x, xCollideCallback);
-            moved.y = MoveY(amount.y, yCollideCallback);
-
-            return moved;
+            MoveX(amount.x, xCollideCallback);
+            MoveY(amount.y, yCollideCallback);
         }
 
-        public int MoveX (float amount, Action<int> onCollide)
+        public void MoveX (float amount, Action<int> onCollide)
         {
             remainder.x += amount;
-            int toMove = (int) remainder.x;
+            int toMove = Mathf.RoundToInt(remainder.x);
 
             if (toMove != 0)
             {
@@ -50,14 +46,12 @@ namespace C13.Physics
                     }
                 }
             }
-
-            return toMove;
         }
 
-        public int MoveY (float amount, Action<int> onCollide)
+        public void MoveY (float amount, Action<int> onCollide)
         {
             remainder.y += amount;
-            int toMove = (int) remainder.y;
+            int toMove = Mathf.RoundToInt(remainder.y);
 
             if (toMove != 0)
             {
@@ -78,8 +72,6 @@ namespace C13.Physics
                     }
                 }
             }
-
-            return toMove;
         }
 
         public void ClearRemainderX ()
