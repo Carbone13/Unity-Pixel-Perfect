@@ -2,7 +2,7 @@
 using C13.Physics;
 using System;
 
-[Tracked(true)]
+[Tracked]
 public class PlatformerController : Actor2D
 {
     public float MoveSpeed = 50f;
@@ -26,7 +26,6 @@ public class PlatformerController : Actor2D
     
     private void Update ()
     {
-
         xInput = Input.GetAxisRaw("Horizontal");
         velocity.x = xInput * MoveSpeed;
         
@@ -47,13 +46,13 @@ public class PlatformerController : Actor2D
     }
     
     
-    private void OnCollideX (int dir)
+    private void OnCollideX (int dir, Entity hit)
     {
         ClearRemainderX();
         velocity.x = 0;
     }
 
-    private void OnCollideY (int dir)
+    private void OnCollideY (int dir, Entity hit)
     {
         if (dir == -1)
         {
@@ -81,7 +80,7 @@ public class PlatformerController : Actor2D
         return (Math.Abs(collider.Bottom - solid.collider.Top) == 0) && !isAtLeft && !isAtRight;
     }
 
-    public override void Squish (int direction)
+    public override void Squish (int direction, Entity hit)
     {
         print("Squished");
         transform.position = new Vector2(0, -25);

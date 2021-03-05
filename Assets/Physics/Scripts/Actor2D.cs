@@ -3,16 +3,16 @@ using System;
 
 namespace C13.Physics
 {
-    [Tracked(true)]
+    [Tracked]
     public abstract class Actor2D : Entity
     {
-        protected void Move (Vector2 amount, Action<int> xCollideCallback = null, Action<int> yCollideCallback = null)
+        protected void Move (Vector2 amount, Action<int, Entity> xCollideCallback = null, Action<int, Entity> yCollideCallback = null)
         {
             MoveX(amount.x, xCollideCallback);
             MoveY(amount.y, yCollideCallback);
         }
 
-        public void MoveX (float amount, Action<int> onCollide)
+        public void MoveX (float amount, Action<int, Entity> onCollide)
         {
             remainder.x += amount;
             int toMove = (int) Math.Round(remainder.x, MidpointRounding.ToEven);
@@ -23,7 +23,7 @@ namespace C13.Physics
             }
         }
         
-        public void MoveY (float amount, Action<int> onCollide)
+        public void MoveY (float amount, Action<int, Entity> onCollide)
         {
             remainder.y += amount;
             int toMove = (int) Math.Round(remainder.y, MidpointRounding.ToEven);
@@ -34,7 +34,7 @@ namespace C13.Physics
             }
         }
         
-        private void MoveExactX (int amount, Action<int> onCollide)
+        private void MoveExactX (int amount, Action<int, Entity> onCollide)
         {
             int sign = Math.Sign(amount);
 
@@ -49,13 +49,13 @@ namespace C13.Physics
                 }
                 else
                 {
-                    onCollide?.Invoke(sign);
+                    onCollide?.Invoke(sign, hit);
                     break;
                 }
             }
         }
         
-        private void MoveExactY (int amount, Action<int> onCollide)
+        private void MoveExactY (int amount, Action<int, Entity> onCollide)
         {
             int sign = Math.Sign(amount);
 
@@ -70,7 +70,7 @@ namespace C13.Physics
                 }
                 else
                 {
-                    onCollide?.Invoke(sign);
+                    onCollide?.Invoke(sign, hit);
                     break;
                 }
             }
@@ -86,15 +86,15 @@ namespace C13.Physics
             remainder.y = 0;
         }
 
-// Class need to make their own isRiding() function
-// Basically, they need to give condition to be considered riding
-// If it's for a platformer, it will be "if we are above the Solid"
-// But maybe we can grab its ledge, so this case need to be considered has isRiding too for example
-// When Riding a moving Solid2D, it will carry us
+        // Class need to make their own isRiding() function
+        // Basically, they need to give condition to be considered riding
+        // If it's for a platformer, it will be "if we are above the Solid"
+        // But maybe we can grab its ledge, so this case need to be considered has isRiding too for example
+        // When Riding a moving Solid2D, it will carry us
         public abstract bool IsRiding (Solid2D solid);
 
-// Class who inherit us need to implement this function
-// It is called when we are squished into a collider by a Solid2D
-        public abstract void Squish (int direction);
+        // Class who inherit us need to implement this function
+        // It is called when we are pushed into a collider by a Solid2D, so we are squished between both
+        public abstract void Squish (int direction, Entity hit);
     }
 }

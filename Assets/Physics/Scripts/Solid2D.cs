@@ -10,7 +10,7 @@ namespace C13.Physics
 // It's mainly used for Moving Platform, but you don't even need to use the Move() function
 // You can just add this script to a random GameObject and make it a wall.
 // If you want something to move and collide with environment, then look at Actor2D
-    [Tracked(true)]
+    [Tracked]
     public abstract class Solid2D : Entity
     {
         private HashSet<Actor2D> riders = new HashSet<Actor2D>();
@@ -26,12 +26,13 @@ namespace C13.Physics
             MoveY(amount.y);
 
             Collidable = true;
+            riders.Clear();
         }
         
         private void MoveX (float amount)
         {
             remainder.x += amount;
-            int toMove = (int) Math.Round(remainder.x, MidpointRounding.ToEven);
+            int toMove = (int) Math.Round(remainder.x);
             if (toMove != 0)
             {
                 remainder.x -= toMove;
@@ -42,7 +43,7 @@ namespace C13.Physics
         private void MoveY (float amount)
         {
             remainder.y += amount;
-            int toMove = (int) Math.Round(remainder.y, MidpointRounding.ToEven);
+            int toMove = (int) Math.Round(remainder.y);
             if (toMove != 0)
             {
                 remainder.y -= toMove;
@@ -54,8 +55,9 @@ namespace C13.Physics
         {
             transform.position = new Vector2(transform.position.x + amount, transform.position.y);
 
-            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
+            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>())
             {
+                var actor = (Actor2D) entity;
                 if (CollideWith(actor))
                 {
                     actor.ClearRemainderX();
@@ -76,8 +78,9 @@ namespace C13.Physics
         {
             transform.position = new Vector2(transform.position.x, transform.position.y + amount);
 
-            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
+            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>())
             {
+                var actor = (Actor2D) entity;
                 if (CollideWith(actor))
                 {
                     actor.ClearRemainderY();
@@ -99,23 +102,12 @@ namespace C13.Physics
         {
             remainder = Vector2.zero;
         }
-
-        public bool HasRider()
-        {
-            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
-            {
-                if (actor.IsRiding(this))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
         
         private void GetRiders ()
         {
-            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
+            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>())
             {
+                var actor = (Actor2D) entity;
                 if (actor.IsRiding(this))
                 {
                     riders.Add(actor);

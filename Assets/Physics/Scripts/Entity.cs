@@ -7,7 +7,7 @@ namespace C13.Physics
     public class Entity : MonoBehaviour
     {
         public new Collider collider;
-        public bool Collidable;
+        public bool Collidable = true;
         
         [SerializeField] protected Vector2 remainder;
 
@@ -48,11 +48,16 @@ namespace C13.Physics
 
         protected T CollideFirst<T> () where T : Entity
         {
+            if (!Collidable) return null;
+            
             foreach (var entity in GameManager.Instance.Tracker.Get<T>())
             {
-                if (CollideWith(entity))
+                if (entity.Collidable && entity != this)
                 {
-                    return (T)entity;
+                    if (CollideWith(entity))
+                    {
+                        return (T)entity;
+                    }
                 }
             }
 
@@ -61,11 +66,16 @@ namespace C13.Physics
 
         protected T CollideFirstAt<T> (Vector2 position) where T : Entity
         {
+            if (!Collidable) return null;
+            
             foreach (var entity in GameManager.Instance.Tracker.Get<T>())
             {
-                if (CollideWith(entity, position))
+                if (entity.Collidable && entity != this)
                 {
-                    return (T)entity;
+                    if (CollideWith(entity, position))
+                    {
+                        return (T) entity;
+                    }
                 }
             }
 
@@ -74,11 +84,16 @@ namespace C13.Physics
         
         protected bool IsCollidingWith<T> () where T : Entity
         {
+            if (!Collidable) return false;
+            
             foreach (var entity in GameManager.Instance.Tracker.Get<T>())
             {
-                if (CollideWith(entity))
+                if (entity.Collidable && entity != this)
                 {
-                    return true;
+                    if (CollideWith(entity))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -87,11 +102,16 @@ namespace C13.Physics
         
         protected bool IsCollidingWithAt<T> (Vector2 position) where T : Entity
         {
+            if (!Collidable) return false;
+            
             foreach (var entity in GameManager.Instance.Tracker.Get<T>())
             {
-                if (CollideWith(entity, position))
+                if (entity.Collidable && entity != this)
                 {
-                    return true;
+                    if (CollideWith(entity, position))
+                    {
+                        return true;
+                    }
                 }
             }
 

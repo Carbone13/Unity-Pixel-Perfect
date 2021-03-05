@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 96075379}
   - component: {fileID: 96075378}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,7 +197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96075377}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.491451, y: 14.027726, z: -4.807951}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -238,7 +238,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!212 &190812762
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -298,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190812760}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 115, y: -27, z: 0}
+  m_LocalPosition: {x: 145, y: -27, z: 0}
   m_LocalScale: {x: 10, y: 26, z: 1}
   m_Children: []
   m_Father: {fileID: 52836725}
@@ -509,6 +510,7 @@ MonoBehaviour:
     debug: 1
     debugColor: {r: 0.735849, g: 0.48552853, b: 0.17702027, a: 1}
   Collidable: 1
+  remainder: {x: 0, y: 0}
   MoveSpeed: 50
   JumpHeight: 50
   JumpApexTime: 0.3
@@ -550,7 +552,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!212 &667086667
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -610,7 +613,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667086665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 94, y: -33, z: 0}
+  m_LocalPosition: {x: 124, y: -33, z: 0}
   m_LocalScale: {x: 10, y: 14, z: 1}
   m_Children: []
   m_Father: {fileID: 52836725}
@@ -702,7 +705,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!4 &703844690
 Transform:
   m_ObjectHideFlags: 0
@@ -752,7 +756,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!212 &1039729264
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -853,9 +858,12 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
-  localWaypoints: []
-  speed: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
+  localWaypoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 50, y: 50, z: 0}
+  speed: 60
   cyclic: 0
 --- !u!212 &1328318020
 SpriteRenderer:
@@ -957,7 +965,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!212 &1509914647
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1058,7 +1067,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!212 &1520986191
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1224,9 +1234,12 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
-  localWaypoints: []
-  speed: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
+  localWaypoints:
+  - {x: 0, y: 0, z: 0}
+  - {x: 50, y: 0, z: 0}
+  speed: 10
   cyclic: 0
 --- !u!1 &2082159466
 GameObject:
@@ -1263,7 +1276,8 @@ MonoBehaviour:
     size: {x: 1, y: 1}
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 0
+  Collidable: 1
+  remainder: {x: 0, y: 0}
 --- !u!212 &2082159468
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -1,19 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace C13.Physics
 {
     public class Tracker
     {
-        private Dictionary<Type, List<Type>> TrackedEntityTypes;
+        // This dictionary list which type we need to track
+        private readonly Dictionary<Type, List<Type>> TrackedEntityTypes;
 
-        public Dictionary<Type, List<Entity>> Entities { get; private set; }
+        // All entities tracked, organized by their Types
+        public readonly Dictionary<Type, List<Entity>> Entities;
 
         public List<Entity> Get<T> () where T : Entity
         {
             return Entities[typeof(T)];
+        }
+
+        public void CompleteDebug ()
+        {
+            foreach (var key in TrackedEntityTypes.Keys)
+            {
+                Debug.Log("--- " + key + " ---" + " " + TrackedEntityTypes[key].Count);
+                for (int i = 0; i < TrackedEntityTypes[key].Count; i++)
+                {
+                    Debug.Log(TrackedEntityTypes[key][i]);
+                }
+            }
+            /*
+            foreach (var key in Entities.Keys)
+            {
+                Debug.Log("--- " + key + " ---" + " " + Entities[key].Count);
+                for (int i = 0; i < Entities[key].Count; i++)
+                {
+                    Debug.Log(Entities[key][i].transform.name);
+                }
+            }
+            */
+            /*
+            for (int i = 0; i < Get<Entity>().Count; i++)
+            {
+                Debug.Log(Get<Entity>()[i].transform.name);
+            }*/
         }
         
         public void Add (Entity entity)
@@ -121,7 +151,7 @@ namespace C13.Physics
     {
         public readonly bool Inherited;
         
-        public Tracked(bool inherited = false)
+        public Tracked(bool inherited = true)
         {
             Inherited = inherited;
         }

@@ -23,8 +23,14 @@ public class GameManager : MonoBehaviour
         }
         
         Tracker = new Tracker();
+        
     }
-    
+
+    private void Start ()
+    {
+        //Tracker.CompleteDebug();
+    }
+
     public Tracker Tracker;
 
 }
