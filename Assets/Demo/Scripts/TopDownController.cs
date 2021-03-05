@@ -2,6 +2,9 @@
 using C13.Physics;
 using System;
 
+/*
+ 
+ 
 public class TopDownController : Actor2D
 {
     public float MoveSpeed = 50.0f;
@@ -23,7 +26,7 @@ public class TopDownController : Actor2D
     
     
     // In this example, we are considered as Riding the solid when On Top of It
-    public override bool isRiding (Solid2D solid)
+    public override bool IsRiding (Solid2D solid)
     {
         // We just need to check if our Collider's Bottom Edge is the same as the Solid's Top Edge
         // and we are not at its left or its right
@@ -38,4 +41,4 @@ public class TopDownController : Actor2D
     {
         print("squish");
     }
-}
+}*/

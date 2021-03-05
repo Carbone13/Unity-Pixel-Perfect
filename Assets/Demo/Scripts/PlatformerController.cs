@@ -2,6 +2,7 @@
 using C13.Physics;
 using System;
 
+[Tracked(true)]
 public class PlatformerController : Actor2D
 {
     public float MoveSpeed = 50f;
@@ -25,6 +26,7 @@ public class PlatformerController : Actor2D
     
     private void Update ()
     {
+
         xInput = Input.GetAxisRaw("Horizontal");
         velocity.x = xInput * MoveSpeed;
         
@@ -41,7 +43,7 @@ public class PlatformerController : Actor2D
 
         Move(velocity * Time.deltaTime, OnCollideX, OnCollideY);
 
-        if (!hitbox.CollideAt(hitbox.position - new Vector2(0, 1))) isGrounded = false;
+        if (!IsCollidingWithAt<Entity>(collider.AbsolutePosition - new Vector2(0, 1))) isGrounded = false;
     }
     
     
@@ -69,15 +71,14 @@ public class PlatformerController : Actor2D
         jumpVelocity = (float)Math.Sqrt(2 * gravity * JumpHeight);
     }
     
-    public override bool isRiding (Solid2D solid)
+    public override bool IsRiding (Solid2D solid)
     {
         // We just need to check if our Collider Bottom Edge is the same as the Solid Top Edge
         // and we are not at its left or its right
-        bool isAtLeft = hitbox.Right < solid.hitbox.Left;
-        bool isAtRight = hitbox.Left > solid.hitbox.Right;
-
-        // We use a little offset to handle the lose of precision caused by floats
-        return (Math.Abs(hitbox.Bottom - solid.hitbox.Top) == 0) && !isAtLeft && !isAtRight;
+        bool isAtLeft = collider.Right < solid.collider.Left;
+        bool isAtRight = collider.Left > solid.collider.Right;
+        
+        return (Math.Abs(collider.Bottom - solid.collider.Top) == 0) && !isAtLeft && !isAtRight;
     }
 
     public override void Squish (int direction)

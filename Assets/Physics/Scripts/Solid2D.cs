@@ -3,99 +3,124 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace C13.Physics
-{ 
-    [RequireComponent(typeof(AABB))]
+{
 // Solid2d is a class which you need to inherit from
 // It is used for things that need to move but don't care about colliding
 // BUT ! It will carry or push Actor2D if it's in its path !
 // It's mainly used for Moving Platform, but you don't even need to use the Move() function
 // You can just add this script to a random GameObject and make it a wall.
 // If you want something to move and collide with environment, then look at Actor2D
-    public abstract class Solid2D : MonoBehaviour
+    [Tracked(true)]
+    public abstract class Solid2D : Entity
     {
-        [HideInInspector] public AABB hitbox;
-
-        [SerializeField] private Vector2 remainder;
-
-        private void Awake ()
-        {
-            hitbox = GetComponent<AABB>();
-        }
+        private HashSet<Actor2D> riders = new HashSet<Actor2D>();
 
         // Simple move function
-        // It won't work if the Delta Time is too small, because float are not precise enough
         protected void Move (Vector2 amount)
         {
-            // If we don't move at all, no need to run this function
-            if (amount.x == 0 && amount.y == 0) return;
+            GetRiders();
+            
+            Collidable = false;
+            
+            MoveX(amount.x);
+            MoveY(amount.y);
 
-            // First we need to be aware of all our riders
-            List<Actor2D> riders = this.GetAllRiders();
-
-            // We deactivate collision detection so Actor2D won't get stuck on us
-            hitbox.isActive = false;
-
-            remainder.x += amount.x;
-            remainder.y += amount.y;
-
-            int toMoveX = Mathf.RoundToInt(remainder.x);
-            int toMoveY = Mathf.RoundToInt(remainder.y);
-
-            if (toMoveX != 0)
+            Collidable = true;
+        }
+        
+        private void MoveX (float amount)
+        {
+            remainder.x += amount;
+            int toMove = (int) Math.Round(remainder.x, MidpointRounding.ToEven);
+            if (toMove != 0)
             {
-                remainder.x -= toMoveX;
-                transform.position = new Vector2(transform.position.x + toMoveX, transform.position.y);
+                remainder.x -= toMove;
+                MoveExactX(toMove);
+            }
+        }
 
-                foreach (Actor2D actor in Physics.actors)
+        private void MoveY (float amount)
+        {
+            remainder.y += amount;
+            int toMove = (int) Math.Round(remainder.y, MidpointRounding.ToEven);
+            if (toMove != 0)
+            {
+                remainder.y -= toMove;
+                MoveExactY(toMove);
+            }
+        }
+
+        private void MoveExactX (int amount)
+        {
+            transform.position = new Vector2(transform.position.x + amount, transform.position.y);
+
+            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
+            {
+                if (CollideWith(actor))
                 {
-                    if (hitbox.OverlapWith(actor.hitbox))
-                    {
-                        actor.ClearRemainderX();
+                    actor.ClearRemainderX();
 
-                        if (toMoveX > 0)
-                            actor.MoveX(hitbox.Right - actor.hitbox.Left, actor.Squish);
-                        else
-                            actor.MoveX(hitbox.Left - actor.hitbox.Right, actor.Squish);
-                    }
-                    else if (riders.Contains(actor))
-                    {
-                        actor.ClearRemainderX();
-                        actor.MoveX(toMoveX, null);
-                    }
+                    if (amount > 0)
+                        actor.MoveX(collider.Right - actor.collider.Left, actor.Squish);
+                    else
+                        actor.MoveX(collider.Left - actor.collider.Right, actor.Squish);
+                }
+                else if (riders.Contains(actor))
+                {
+                    actor.MoveX(amount, null);
                 }
             }
+        }
 
-            if (toMoveY != 0)
+        private void MoveExactY (int amount)
+        {
+            transform.position = new Vector2(transform.position.x, transform.position.y + amount);
+
+            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
             {
-                remainder.y -= toMoveY;
-                transform.position = new Vector2(transform.position.x, transform.position.y + toMoveY);
-
-                foreach (Actor2D actor in Physics.actors)
+                if (CollideWith(actor))
                 {
-                    if (hitbox.OverlapWith(actor.hitbox))
-                    {
-                        actor.ClearRemainderY();
+                    actor.ClearRemainderY();
 
-                        if (toMoveY > 0)
-                            actor.MoveY(hitbox.Top - actor.hitbox.Bottom, actor.Squish);
-                        else
-                            actor.MoveY(hitbox.Bottom - actor.hitbox.Top, actor.Squish);
-                    }
-                    else if (riders.Contains(actor))
-                    {
-                        actor.ClearRemainderY();
-                        actor.MoveY(toMoveY, null);
-                    }
+                    if (amount > 0)
+                        actor.MoveY(collider.Top - actor.collider.Bottom, actor.Squish);
+                    else
+                        actor.MoveY(collider.Bottom - actor.collider.Top, actor.Squish);
+                }
+                else if (riders.Contains(actor))
+                {
+                    actor.MoveY(amount, null);
                 }
             }
-
-            // Now we reactivate collisions
-            hitbox.isActive = true;
+            
         }
 
         protected void ClearRemainder ()
         {
             remainder = Vector2.zero;
+        }
+
+        public bool HasRider()
+        {
+            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
+            {
+                if (actor.IsRiding(this))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        private void GetRiders ()
+        {
+            foreach (Actor2D actor in GameManager.Instance.Tracker.Get<Actor2D>())
+            {
+                if (actor.IsRiding(this))
+                {
+                    riders.Add(actor);
+                }
+            }
         }
     }
 }

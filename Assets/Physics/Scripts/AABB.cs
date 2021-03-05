@@ -7,77 +7,62 @@ namespace C13.Physics
     /// Simple bounding boxes : it's a rectangle
     /// Use Corner Coordinate System, meaning that the pivot is at the upper left edge and not at the center as the BoxCollider2D
     /// </summary>
-    public class AABB : MonoBehaviour
+    [Serializable]
+    public class Collider
     {
+        // Reference to the entity we belong to
+        public Entity owner { private get; set; }
+        
         // Editor variable, a size and an offset
-        public Vector2Int offset;
-        public Vector2Int size = new Vector2Int(1, 1);
-        public bool isActive = true;
+        [SerializeField] private Vector2Int offset;
+        [SerializeField] private Vector2Int size = new Vector2Int(1, 1);
+
+        [Space]
         // Used to show the box in the editor
-        public bool debug;
-        public Color debugColor;
+        [SerializeField] private bool debug = true;
+        [SerializeField] private Color debugColor = Color.green;
 
-        
-        // Return the position in the scene
-        public Vector2 position => (Vector2) transform.position - (sceneSize / 2) + offset;
-        // Return the size according to our scale
-        public Vector2 sceneSize => (Vector2) size * transform.lossyScale;
+        public float Left => AbsoluteX;
+        public float Right => AbsoluteX + AbsoluteSize.x;
+        public float Top => AbsoluteY + AbsoluteSize.y;
+        public float Bottom => AbsoluteY;
 
-        // These functions return edge
-        // It is similar to Bounds.min/max
-        public float Left => position.x;
-        public float Right => position.x + sceneSize.x;
-        public float Top => position.y + sceneSize.y;
-        public float Bottom => position.y;
-        
-        
-        /// <summary>
-        /// Return true if colliding with <c>other</c>.
-        /// It will check at this box current position, but you can run the test on another position using <c>positionOverwrite</c>.
-        /// </summary>
-        public bool OverlapWith (AABB other, Vector2? positionOverwrite = null)
+        public Vector2Int AbsoluteSize => new Vector2Int(size.x * (int)owner.transform.lossyScale.x, size.y * (int)owner.transform.lossyScale.y);
+        public Vector2Int AbsolutePosition => new Vector2Int(AbsoluteX, AbsoluteY);
+
+        public int AbsoluteX
         {
-            float x, y;
-
-            if (positionOverwrite == null)
+            get
             {
-                x = Math.Abs((position.x + sceneSize.x / 2) - (other.position.x + other.sceneSize.x / 2));
-                y = Math.Abs((position.y + sceneSize.y / 2) - (other.position.y + other.sceneSize.y / 2));
+                if (owner != null)
+                {
+                    return (int)owner.transform.position.x - AbsoluteSize.x / 2 + offset.x;
+                }
+
+                return offset.x;
             }
-            else
-            {
-                Vector2 _positionOverwrite = (Vector2) positionOverwrite;
-
-                x = Math.Abs((_positionOverwrite.x + sceneSize.x / 2) - (other.position.x + other.sceneSize.x / 2));
-                y = Math.Abs((_positionOverwrite.y + sceneSize.y / 2) - (other.position.y + other.sceneSize.y / 2));
-            }
-
-            bool xCheck = x * 2 < (sceneSize.x + other.sceneSize.x);
-            bool yCheck = y * 2 < (sceneSize.y + other.sceneSize.y);
-
-            return xCheck && yCheck;
-        }
-
-        // Register this box when enabled;
-        private void OnEnable ()
-        {
-            this.RegisterBox();
         }
         
-        // Unregister it when disabled
-        private void OnDisable ()
+        public int AbsoluteY
         {
-            this.UnregisterBox();
-        }
+            get
+            {
+                if (owner != null)
+                {
+                    return (int)owner.transform.position.y - AbsoluteSize.y / 2 + offset.y;
+                }
 
-        // Draw the box in the editor
-        private void OnDrawGizmos ()
+                return offset.x;
+            }
+        }
+        
+        public void Draw ()
         {
             if (debug)
             {
                 Gizmos.color = debugColor;
                 // Little conversion from Corner Coordinate to Center Coordinate
-                Gizmos.DrawWireCube(position + sceneSize / 2, sceneSize);
+                Gizmos.DrawWireCube(AbsolutePosition + (Vector2)(AbsoluteSize / 2), (Vector2)AbsoluteSize);
             }
         }
     }

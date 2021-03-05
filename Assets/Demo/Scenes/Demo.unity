@@ -160,6 +160,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &96075377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 96075379}
+  - component: {fileID: 96075378}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &96075378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96075377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4834cce9e417744a61bcf5c9283634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &96075379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96075377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.491451, y: 14.027726, z: -4.807951}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &190812760
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,14 +230,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 190812760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!212 &190812762
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -375,8 +419,6 @@ GameObject:
   - component: {fileID: 550007078}
   - component: {fileID: 550007077}
   - component: {fileID: 550007081}
-  - component: {fileID: 550007079}
-  - component: {fileID: 550007080}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -449,38 +491,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &550007079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550007076}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de7160c15db461a96b9244e4c8ee20c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
-  remainder: {x: 0, y: 0}
-  MoveSpeed: 75
---- !u!114 &550007080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 550007076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &550007081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,8 +503,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a59f657d2a475ca13523fb8e07f794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
-  remainder: {x: 0, y: 0}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0.735849, g: 0.48552853, b: 0.17702027, a: 1}
+  Collidable: 1
   MoveSpeed: 50
   JumpHeight: 50
   JumpApexTime: 0.3
@@ -528,14 +542,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 667086665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!212 &667086667
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -679,14 +694,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 703844687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 0
-  debugColor: {r: 0, g: 0, b: 0, a: 0}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!4 &703844690
 Transform:
   m_ObjectHideFlags: 0
@@ -728,14 +744,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039729262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!212 &1039729264
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -811,7 +828,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1328318021}
   - component: {fileID: 1328318020}
-  - component: {fileID: 1328318019}
   - component: {fileID: 1328318018}
   m_Layer: 0
   m_Name: Moving Platform (1)
@@ -832,30 +848,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03309a57619c0f9418f0515ab9eb5109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
-  remainder: {x: 0, y: 0}
-  localWaypoints:
-  - {x: 0, y: 0, z: 0}
-  - {x: 50, y: 50, z: 0}
-  speed: 50
-  cyclic: 1
---- !u!114 &1328318019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328318017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
+  localWaypoints: []
+  speed: 0
+  cyclic: 0
 --- !u!212 &1328318020
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -948,14 +949,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1509914645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!212 &1509914647
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1048,14 +1050,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1520986189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!212 &1520986191
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1131,7 +1134,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1860678446}
   - component: {fileID: 1860678445}
-  - component: {fileID: 1860678444}
   - component: {fileID: 1860678447}
   m_Layer: 0
   m_Name: Moving Platform
@@ -1140,23 +1142,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1860678444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860678443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!212 &1860678445
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1234,13 +1219,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03309a57619c0f9418f0515ab9eb5109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
-  remainder: {x: 0, y: 0}
-  localWaypoints:
-  - {x: 0, y: 0, z: 0}
-  - {x: 50, y: 0, z: 0}
-  speed: 30
-  cyclic: 1
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
+  localWaypoints: []
+  speed: 0
+  cyclic: 0
 --- !u!1 &2082159466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,14 +1255,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2082159466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61aa4e670921cc41aca6c4e1c2a9375, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e6949e5af1a401597ba941d37a29a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0}
-  size: {x: 1, y: 1}
-  isActive: 1
-  debug: 1
-  debugColor: {r: 1, g: 0, b: 0, a: 1}
+  collider:
+    offset: {x: 0, y: 0}
+    size: {x: 1, y: 1}
+    debug: 1
+    debugColor: {r: 0, g: 1, b: 0, a: 1}
+  Collidable: 0
 --- !u!212 &2082159468
 SpriteRenderer:
   m_ObjectHideFlags: 0

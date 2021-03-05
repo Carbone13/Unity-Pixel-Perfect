@@ -2,8 +2,10 @@
 using UnityEngine;
 using C13.Physics;
 
+
 // Simple MovingPlatform class, to show how to use Solid2D class
 // Notice that we inherit from Solid2D
+[Tracked(true)]
 public class MovingPlatform : Solid2D
 {
     public Vector3[] localWaypoints;
@@ -50,8 +52,9 @@ public class MovingPlatform : Solid2D
         }
     }
 
-    private void OnDrawGizmos ()
+    public override void OnDrawGizmos ()
     {
+        base.OnDrawGizmos();
         if (localWaypoints != null)
         {
             Gizmos.color = Color.red;
