@@ -14,38 +14,11 @@ namespace C13.Physics
         // All entities tracked, organized by their Types
         public readonly Dictionary<Type, List<Entity>> Entities;
 
-        public List<Entity> Get<T> () where T : Entity
+        public IEnumerable<Entity> Get<T> () where T : Entity
         {
             return Entities[typeof(T)];
         }
 
-        public void CompleteDebug ()
-        {
-            foreach (var key in TrackedEntityTypes.Keys)
-            {
-                Debug.Log("--- " + key + " ---" + " " + TrackedEntityTypes[key].Count);
-                for (int i = 0; i < TrackedEntityTypes[key].Count; i++)
-                {
-                    Debug.Log(TrackedEntityTypes[key][i]);
-                }
-            }
-            /*
-            foreach (var key in Entities.Keys)
-            {
-                Debug.Log("--- " + key + " ---" + " " + Entities[key].Count);
-                for (int i = 0; i < Entities[key].Count; i++)
-                {
-                    Debug.Log(Entities[key][i].transform.name);
-                }
-            }
-            */
-            /*
-            for (int i = 0; i < Get<Entity>().Count; i++)
-            {
-                Debug.Log(Get<Entity>()[i].transform.name);
-            }*/
-        }
-        
         public void Add (Entity entity)
         {
             Type type = entity.GetType();
@@ -126,7 +99,7 @@ namespace C13.Physics
             }
         }
 
-        private List<Type> GetSubclasses(Type type)
+        private IEnumerable<Type> GetSubclasses(Type type)
         {
             List<Type> matches = new List<Type>();
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();

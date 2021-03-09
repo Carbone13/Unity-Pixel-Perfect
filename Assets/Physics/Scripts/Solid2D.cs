@@ -32,7 +32,7 @@ namespace C13.Physics
         private void MoveX (float amount)
         {
             remainder.x += amount;
-            int toMove = (int) Math.Round(remainder.x);
+            int toMove = (int) Math.Round(remainder.x, MidpointRounding.ToEven);
             if (toMove != 0)
             {
                 remainder.x -= toMove;
@@ -43,7 +43,7 @@ namespace C13.Physics
         private void MoveY (float amount)
         {
             remainder.y += amount;
-            int toMove = (int) Math.Round(remainder.y);
+            int toMove = (int) Math.Round(remainder.y, MidpointRounding.ToEven);
             if (toMove != 0)
             {
                 remainder.y -= toMove;

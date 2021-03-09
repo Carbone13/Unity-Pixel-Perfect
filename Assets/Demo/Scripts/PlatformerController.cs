@@ -42,7 +42,7 @@ public class PlatformerController : Actor2D
 
         Move(velocity * Time.deltaTime, OnCollideX, OnCollideY);
 
-        if (!IsCollidingWithAt<Entity>(collider.AbsolutePosition - new Vector2(0, 1))) isGrounded = false;
+        if (!IsCollidingWith<Entity>(collider.AbsolutePosition - new Vector2(0, 1))) isGrounded = false;
     }
     
     

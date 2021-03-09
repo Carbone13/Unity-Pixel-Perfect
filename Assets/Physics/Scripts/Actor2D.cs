@@ -40,7 +40,7 @@ namespace C13.Physics
 
             while (amount != 0)
             {
-                Entity hit = CollideFirstAt<Entity>(collider.AbsolutePosition + Vector2.right * sign);
+                Entity hit = CollideFirst<Entity>(collider.AbsolutePosition + Vector2.right * sign);
 
                 if (hit == null)
                 {
@@ -61,7 +61,7 @@ namespace C13.Physics
 
             while (amount != 0)
             {
-                Entity hit = CollideFirstAt<Entity>(collider.AbsolutePosition + Vector2.up * sign);
+                Entity hit = CollideFirst<Entity>(collider.AbsolutePosition + Vector2.up * sign);
 
                 if (hit == null)
                 {
@@ -86,6 +86,8 @@ namespace C13.Physics
             remainder.y = 0;
         }
 
+        
+        
         // Class need to make their own isRiding() function
         // Basically, they need to give condition to be considered riding
         // If it's for a platformer, it will be "if we are above the Solid"

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 using System;
 
 namespace C13.Physics
@@ -9,19 +10,8 @@ namespace C13.Physics
         public new Collider collider;
         public bool Collidable = true;
         
-        [SerializeField] protected Vector2 remainder;
-
-
-        public virtual void Awake ()
-        {
-            collider.owner = this;
-        }
-
-        public virtual void OnDrawGizmos ()
-        {
-            collider.owner = this;
-            collider.Draw();
-        }
+        protected Vector2 remainder;
+        
         
         protected bool CollideWith (Entity other, Vector2? at = null)
         {
@@ -46,15 +36,21 @@ namespace C13.Physics
             return xCheck && yCheck;
         }
 
-        protected T CollideFirst<T> () where T : Entity
+
+        
+        protected T CollideFirst<T> (Vector2? at) where T : Entity
         {
+            return !Collidable ? null : (from entity in GameManager.Instance.Tracker.Get<T>() where entity.Collidable && entity != this where CollideWith(entity, at) select (T) entity).FirstOrDefault();
+            
+            // This can be written like that :
+            /*
             if (!Collidable) return null;
             
             foreach (var entity in GameManager.Instance.Tracker.Get<T>())
             {
                 if (entity.Collidable && entity != this)
                 {
-                    if (CollideWith(entity))
+                    if (CollideWith(entity, at))
                     {
                         return (T)entity;
                     }
@@ -62,35 +58,22 @@ namespace C13.Physics
             }
 
             return null;
+            */
         }
 
-        protected T CollideFirstAt<T> (Vector2 position) where T : Entity
+        protected bool IsCollidingWith<T> (Vector2? at = null) where T : Entity
         {
-            if (!Collidable) return null;
+            return Collidable && GameManager.Instance.Tracker.Get<T>().Where(entity => entity.Collidable && entity != this).Any(entity => CollideWith(entity, at));
             
-            foreach (var entity in GameManager.Instance.Tracker.Get<T>())
-            {
-                if (entity.Collidable && entity != this)
-                {
-                    if (CollideWith(entity, position))
-                    {
-                        return (T) entity;
-                    }
-                }
-            }
-
-            return null;
-        }
-        
-        protected bool IsCollidingWith<T> () where T : Entity
-        {
+            // This can be written like that :
+            /*
             if (!Collidable) return false;
-            
+
             foreach (var entity in GameManager.Instance.Tracker.Get<T>())
             {
                 if (entity.Collidable && entity != this)
                 {
-                    if (CollideWith(entity))
+                    if (CollideWith(entity, at))
                     {
                         return true;
                     }
@@ -98,34 +81,33 @@ namespace C13.Physics
             }
 
             return false;
+            */
+        }
+
+        
+        #region Virtual Void
+        // Inheritors can override these void
+        
+        public virtual void Awake ()
+        {
+            collider.owner = this;
+        }
+
+        public virtual void OnDrawGizmos ()
+        {
+            collider.owner = this;
+            collider.Draw();
         }
         
-        protected bool IsCollidingWithAt<T> (Vector2 position) where T : Entity
-        {
-            if (!Collidable) return false;
-            
-            foreach (var entity in GameManager.Instance.Tracker.Get<T>())
-            {
-                if (entity.Collidable && entity != this)
-                {
-                    if (CollideWith(entity, position))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        public void OnEnable ()
+        public virtual void OnEnable ()
         {
             GameManager.Instance.Tracker.Add(this);
         }
         
-        public void OnDisable ()
+        public virtual void OnDisable ()
         {
             GameManager.Instance.Tracker.Remove(this);
         }
+        #endregion
     }
 }
