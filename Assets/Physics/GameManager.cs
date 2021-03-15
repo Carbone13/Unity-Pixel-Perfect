@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using C13.Physics;
+﻿using C13.Physics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
-    public static GameManager Instance { get { return _instance; } }
-
+    public static GameManager Instance => _instance;
 
     private void Awake()
     {
@@ -23,14 +18,8 @@ public class GameManager : MonoBehaviour
         }
         
         Tracker = new Tracker();
-        
-    }
-
-    private void Start ()
-    {
-        //Tracker.CompleteDebug();
+        Tracker.qtree = new QuadTree<Entity>(1000, new Rect(-300, -300, 600, 600));
     }
 
     public Tracker Tracker;
-
 }

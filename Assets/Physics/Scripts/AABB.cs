@@ -56,6 +56,11 @@ namespace C13.Physics
             }
         }
         
+        public static explicit operator Rect (Collider toConvert)
+        {
+            return new Rect(toConvert.AbsolutePosition, toConvert.AbsoluteSize);
+        }
+        
         public void Draw ()
         {
             if (debug)

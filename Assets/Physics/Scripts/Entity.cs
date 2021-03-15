@@ -4,15 +4,22 @@ using System;
 
 namespace C13.Physics
 {
-    [Tracked]
-    public class Entity : MonoBehaviour
+    public class Entity : MonoBehaviour, IQuadTreeObject
     {
+        #region Collider Settings
         public new Collider collider;
+        
+        [SerializeField, Tooltip("This entity will check for collision only the collider in this area")]
+        protected Collider quadTreeRange;
+        
         public bool Collidable = true;
+        #endregion
         
+        #region Runtime
         protected Vector2 remainder;
-        
-        
+        #endregion
+
+        #region Protected void
         protected bool CollideWith (Entity other, Vector2? at = null)
         {
             float x, y;
@@ -32,58 +39,20 @@ namespace C13.Physics
 
             bool xCheck = x * 2 < (collider.AbsoluteSize.x + other.collider.AbsoluteSize.x);
             bool yCheck = y * 2 < (collider.AbsoluteSize.y + other.collider.AbsoluteSize.y);
-
+            
             return xCheck && yCheck;
         }
-
-
         
         protected T CollideFirst<T> (Vector2? at) where T : Entity
         {
-            return !Collidable ? null : (from entity in GameManager.Instance.Tracker.Get<T>() where entity.Collidable && entity != this where CollideWith(entity, at) select (T) entity).FirstOrDefault();
-            
-            // This can be written like that :
-            /*
-            if (!Collidable) return null;
-            
-            foreach (var entity in GameManager.Instance.Tracker.Get<T>())
-            {
-                if (entity.Collidable && entity != this)
-                {
-                    if (CollideWith(entity, at))
-                    {
-                        return (T)entity;
-                    }
-                }
-            }
-
-            return null;
-            */
+            return !Collidable ? null : (from entity in GameManager.Instance.Tracker.Get<T>((Rect)quadTreeRange) where entity.Collidable && entity != this where CollideWith(entity, at) select (T) entity).FirstOrDefault();
         }
 
         protected bool IsCollidingWith<T> (Vector2? at = null) where T : Entity
         {
-            return Collidable && GameManager.Instance.Tracker.Get<T>().Where(entity => entity.Collidable && entity != this).Any(entity => CollideWith(entity, at));
-            
-            // This can be written like that :
-            /*
-            if (!Collidable) return false;
-
-            foreach (var entity in GameManager.Instance.Tracker.Get<T>())
-            {
-                if (entity.Collidable && entity != this)
-                {
-                    if (CollideWith(entity, at))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-            */
+            return Collidable && GameManager.Instance.Tracker.Get<T>((Rect)quadTreeRange).Where(entity => entity.Collidable && entity != this).Any(entity => CollideWith(entity, at));
         }
-
+        #endregion
         
         #region Virtual Void
         // Inheritors can override these void
@@ -91,12 +60,16 @@ namespace C13.Physics
         public virtual void Awake ()
         {
             collider.owner = this;
+            quadTreeRange.owner = this;
         }
 
         public virtual void OnDrawGizmos ()
         {
             collider.owner = this;
+            quadTreeRange.owner = this;
+            
             collider.Draw();
+            quadTreeRange.Draw();
         }
         
         public virtual void OnEnable ()
@@ -109,5 +82,10 @@ namespace C13.Physics
             GameManager.Instance.Tracker.Remove(this);
         }
         #endregion
+
+        public Rect GetBounds ()
+        {
+            return (Rect)collider;
+        }
     }
 }

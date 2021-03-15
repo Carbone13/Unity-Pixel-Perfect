@@ -5,7 +5,6 @@ using C13.Physics;
 
 // Simple MovingPlatform class, to show how to use Solid2D class
 // Notice that we inherit from Solid2D
-[Tracked]
 public class MovingPlatform : Solid2D
 {
     public Vector3[] localWaypoints;
