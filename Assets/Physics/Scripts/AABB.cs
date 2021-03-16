@@ -5,13 +5,13 @@ namespace C13.Physics
 {
     /// <summary>
     /// Simple bounding boxes : it's a rectangle
-    /// Use Corner Coordinate System, meaning that the pivot is at the upper left edge and not at the center as the BoxCollider2D
+    /// Use Corner Coordinate System, meaning that the pivot is at the bottom left edge and not at the center as the BoxCollider2D
     /// </summary>
     [Serializable]
     public class Collider
     {
         // Reference to the entity we belong to
-        public Entity owner { private get; set; }
+        public Entity owner { get; set; }
         
         // Editor variable, a size and an offset
         [SerializeField] private Vector2Int offset;
@@ -22,6 +22,7 @@ namespace C13.Physics
         [SerializeField] private bool debug = true;
         [SerializeField] private Color debugColor = Color.green;
 
+        
         public float Left => AbsoluteX;
         public float Right => AbsoluteX + AbsoluteSize.x;
         public float Top => AbsoluteY + AbsoluteSize.y;
@@ -30,30 +31,13 @@ namespace C13.Physics
         public Vector2Int AbsoluteSize => new Vector2Int(size.x * (int)owner.transform.lossyScale.x, size.y * (int)owner.transform.lossyScale.y);
         public Vector2Int AbsolutePosition => new Vector2Int(AbsoluteX, AbsoluteY);
 
-        public int AbsoluteX
-        {
-            get
-            {
-                if (owner != null)
-                {
-                    return (int)owner.transform.position.x - AbsoluteSize.x / 2 + offset.x;
-                }
-
-                return offset.x;
-            }
-        }
+        public int AbsoluteX => (int)owner.transform.position.x - AbsoluteSize.x / 2 + offset.x;
+        public int AbsoluteY => (int)owner.transform.position.y - AbsoluteSize.y / 2 + offset.y;
         
-        public int AbsoluteY
+        
+        public static explicit operator Rect (Collider toConvert)
         {
-            get
-            {
-                if (owner != null)
-                {
-                    return (int)owner.transform.position.y - AbsoluteSize.y / 2 + offset.y;
-                }
-
-                return offset.x;
-            }
+            return new Rect(toConvert.AbsolutePosition, toConvert.AbsoluteSize);
         }
         
         public void Draw ()
@@ -65,6 +49,5 @@ namespace C13.Physics
                 Gizmos.DrawWireCube(AbsolutePosition + (Vector2)(AbsoluteSize / 2), (Vector2)AbsoluteSize);
             }
         }
-
     }
 }
