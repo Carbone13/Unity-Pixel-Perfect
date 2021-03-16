@@ -11,14 +11,9 @@ public class NewBehaviourScript : Entity
 
     private void Update ()
     {
-        detectedByQtree = GameManager.Instance.Tracker.qtree.RetrieveObjectsInArea((Rect)quadTreeRange);
-    }
-
-    public override void OnDrawGizmos ()
-    {
-        base.OnDrawGizmos();
-        if (GameManager.Instance == null) return;
+        Rect enveloppe = (Rect)collisionCheckRange;
+        detectedByQtree = GameManager.Instance.Tracker.rtree.Find(enveloppe.xMin, enveloppe.yMin, enveloppe.xMax, enveloppe.yMax).ToList();
         
-        GameManager.Instance.Tracker.qtree.DrawDebug();
+        //var items = GameManager.Instance.Tracker.rtree.Search();
     }
 }

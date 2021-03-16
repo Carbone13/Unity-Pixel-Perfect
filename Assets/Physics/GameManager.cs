@@ -1,4 +1,6 @@
-﻿using C13.Physics;
+﻿using System;
+using C13.Physics;
+using org.khelekore.prtree;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -18,8 +20,24 @@ public class GameManager : MonoBehaviour
         }
         
         Tracker = new Tracker();
-        Tracker.qtree = new QuadTree<Entity>(1000, new Rect(-300, -300, 600, 600));
+        Tracker.rtree = new PRTree<Entity>(new EntityBoundsGetter(), 4);
+    }
+
+    private void Update ()
+    {
+        if (!InitializedTracker)
+        {
+            Tracker.Initialize();
+            InitializedTracker = true;
+        }
+    }
+
+    private void LateUpdate ()
+    {
+        // TODO Rebuilding the tree every frame cost a lot
+        //Tracker.rtree.Rebuild();
     }
 
     public Tracker Tracker;
+    private bool InitializedTracker;
 }
