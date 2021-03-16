@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
         }
         
         Tracker = new Tracker();
-        Tracker.rtree = new PRTree<Entity>(new EntityBoundsGetter(), 4);
+        Tracker.rtree = new PRTree<Entity>(new EntityBoundsGetter(), Tracker.BranchFactor);
     }
 
     private void Update ()
@@ -32,12 +32,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LateUpdate ()
-    {
-        // TODO Rebuilding the tree every frame cost a lot
-        //Tracker.rtree.Rebuild();
-    }
-
     public Tracker Tracker;
-    private bool InitializedTracker;
+    public bool InitializedTracker;
 }

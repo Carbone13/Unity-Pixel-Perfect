@@ -7,6 +7,10 @@ namespace C13.Physics
 {
     public class Tracker
     {
+        // Need to be > 1
+        // Lower value = Slower Insertion, Faster search
+        // Higher value = Faster Insertion, Slower search
+        public const int BranchFactor = 2;
         private bool initialized;
 
         public PRTree<Entity> rtree;
@@ -31,7 +35,7 @@ namespace C13.Physics
                 // 1 : add all object at Awake, and don't instantiate new one
                 // or 2 : Create a second PR-Tree for "Runtime objects" so at least you wont rebuild every Awake colliders
                 
-                rtree = new PRTree<Entity>(new EntityBoundsGetter(), 4);
+                rtree = new PRTree<Entity>(new EntityBoundsGetter(), BranchFactor);
                 rtree.BulkInsert(entities);
             }
         }
@@ -41,7 +45,7 @@ namespace C13.Physics
             // Like adding at runtime, removing don't work, so we do the same as Inserting :
             entities.Remove(entity);
             
-            rtree = new PRTree<Entity>(new EntityBoundsGetter(), 4);
+            rtree = new PRTree<Entity>(new EntityBoundsGetter(), BranchFactor);
             rtree.BulkInsert(entities);
         }
 
