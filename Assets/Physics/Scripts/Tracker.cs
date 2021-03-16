@@ -10,7 +10,7 @@ namespace C13.Physics
         // Need to be > 1
         // Lower value = Slower Insertion, Faster search
         // Higher value = Faster Insertion, Slower search
-        public const int BranchFactor = 2;
+        public const int BranchFactor = 10;
         private bool initialized;
 
         public PRTree<Entity> rtree;
