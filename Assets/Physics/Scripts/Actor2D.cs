@@ -3,39 +3,45 @@ using System;
 
 namespace C13.Physics
 {
-    [Tracked]
     public abstract class Actor2D : Entity
     {
-        protected void Move (Vector2 amount, Action<int, Entity> xCollideCallback = null, Action<int, Entity> yCollideCallback = null)
+        protected bool Move (Vector2 amount, Action<int, Entity> xCollideCallback = null, Action<int, Entity> yCollideCallback = null)
         {
-            MoveX(amount.x, xCollideCallback);
-            MoveY(amount.y, yCollideCallback);
+            bool movedX = MoveX(amount.x, xCollideCallback);
+            bool movedY = MoveY(amount.y, yCollideCallback);
+
+            return movedX || movedY;
         }
 
-        public void MoveX (float amount, Action<int, Entity> onCollide)
+        public bool MoveX (float amount, Action<int, Entity> onCollide)
         {
             remainder.x += amount;
             int toMove = (int) Math.Round(remainder.x, MidpointRounding.ToEven);
             if (toMove != 0)
             {
                 remainder.x -= toMove;
-                MoveExactX(toMove, onCollide);
+                return MoveExactX(toMove, onCollide);
             }
+
+            return false;
         }
         
-        public void MoveY (float amount, Action<int, Entity> onCollide)
+        public bool MoveY (float amount, Action<int, Entity> onCollide)
         {
             remainder.y += amount;
             int toMove = (int) Math.Round(remainder.y, MidpointRounding.ToEven);
             if (toMove != 0)
             {
                 remainder.y -= toMove;
-                MoveExactY(toMove, onCollide);
+                return MoveExactY(toMove, onCollide);
             }
+
+            return false;
         }
         
-        private void MoveExactX (int amount, Action<int, Entity> onCollide)
+        private bool MoveExactX (int amount, Action<int, Entity> onCollide)
         {
+            bool moved = false;
             int sign = Math.Sign(amount);
 
             while (amount != 0)
@@ -45,6 +51,7 @@ namespace C13.Physics
                 if (hit == null)
                 {
                     transform.position = new Vector2(transform.position.x + sign, transform.position.y);
+                    moved = true;
                     amount -= sign;
                 }
                 else
@@ -53,10 +60,13 @@ namespace C13.Physics
                     break;
                 }
             }
+
+            return moved;
         }
         
-        private void MoveExactY (int amount, Action<int, Entity> onCollide)
+        private bool MoveExactY (int amount, Action<int, Entity> onCollide)
         {
+            bool moved = false;
             int sign = Math.Sign(amount);
 
             while (amount != 0)
@@ -66,6 +76,7 @@ namespace C13.Physics
                 if (hit == null)
                 {
                     transform.position = new Vector2(transform.position.x, transform.position.y + sign);
+                    moved = true;
                     amount -= sign;
                 }
                 else
@@ -74,6 +85,8 @@ namespace C13.Physics
                     break;
                 }
             }
+
+            return moved;
         }
 
         public void ClearRemainderX ()

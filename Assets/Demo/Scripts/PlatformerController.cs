@@ -2,7 +2,6 @@
 using C13.Physics;
 using System;
 
-[Tracked]
 public class PlatformerController : Actor2D
 {
     public float MoveSpeed = 50f;
@@ -23,9 +22,12 @@ public class PlatformerController : Actor2D
         base.Awake();
         CalculatePhysicConstants();
     }
-    
+
     private void Update ()
     {
+        //List<Entity> hit = GameManager.Instance.Tracker.qtree.RetrieveObjectsInArea(new Rect(collider.AbsolutePosition.x, collider.AbsolutePosition.y, collider.AbsoluteSize.x, collider.AbsoluteSize.y));
+        //print(hit.Count);
+        
         xInput = Input.GetAxisRaw("Horizontal");
         velocity.x = xInput * MoveSpeed;
         
@@ -40,9 +42,9 @@ public class PlatformerController : Actor2D
             velocity.y -= gravity * Time.deltaTime;
         }
 
-        Move(velocity * Time.deltaTime, OnCollideX, OnCollideY);
+        bool hasMoved = Move(velocity * Time.deltaTime, OnCollideX, OnCollideY);
 
-        if (!IsCollidingWith<Entity>(collider.AbsolutePosition - new Vector2(0, 1))) isGrounded = false;
+        if (hasMoved && !IsCollidingWith<Entity>(collider.AbsolutePosition - new Vector2(0, 1))) isGrounded = false;
     }
     
     

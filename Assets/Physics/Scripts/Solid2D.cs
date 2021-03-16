@@ -10,7 +10,6 @@ namespace C13.Physics
 // It's mainly used for Moving Platform, but you don't even need to use the Move() function
 // You can just add this script to a random GameObject and make it a wall.
 // If you want something to move and collide with environment, then look at Actor2D
-    [Tracked]
     public abstract class Solid2D : Entity
     {
         private HashSet<Actor2D> riders = new HashSet<Actor2D>();
@@ -55,7 +54,7 @@ namespace C13.Physics
         {
             transform.position = new Vector2(transform.position.x + amount, transform.position.y);
 
-            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>())
+            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>(collisionCheckRange))
             {
                 var actor = (Actor2D) entity;
                 if (CollideWith(actor))
@@ -78,7 +77,7 @@ namespace C13.Physics
         {
             transform.position = new Vector2(transform.position.x, transform.position.y + amount);
 
-            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>())
+            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>(collisionCheckRange))
             {
                 var actor = (Actor2D) entity;
                 if (CollideWith(actor))
@@ -105,7 +104,7 @@ namespace C13.Physics
         
         private void GetRiders ()
         {
-            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>())
+            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>(collisionCheckRange))
             {
                 var actor = (Actor2D) entity;
                 if (actor.IsRiding(this))

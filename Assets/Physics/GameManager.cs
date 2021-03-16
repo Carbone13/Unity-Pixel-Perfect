@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using C13.Physics;
+using org.khelekore.prtree;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
 
-    public static GameManager Instance { get { return _instance; } }
-
+    public static GameManager Instance => _instance;
 
     private void Awake()
     {
@@ -23,14 +20,18 @@ public class GameManager : MonoBehaviour
         }
         
         Tracker = new Tracker();
-        
+        Tracker.rtree = new PRTree<Entity>(new EntityBoundsGetter(), Tracker.BranchFactor);
     }
 
-    private void Start ()
+    private void Update ()
     {
-        //Tracker.CompleteDebug();
+        if (!InitializedTracker)
+        {
+            Tracker.Initialize();
+            InitializedTracker = true;
+        }
     }
 
     public Tracker Tracker;
-
+    public bool InitializedTracker;
 }
