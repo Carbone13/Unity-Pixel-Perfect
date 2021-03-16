@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Linq;
-using System;
-using org.khelekore.prtree;
+using RTree;
+using QTree;
 
 namespace C13.Physics
 {
-    public class Entity : MonoBehaviour
+    public class Entity : MonoBehaviour, IQuadTreeObject, ISpatialData
     {
         #region Collider Settings
         
         [SerializeField, Tooltip("Collision box for this Entity")]
         public new Collider collider;
         
-        [SerializeField, Tooltip("This entity will only check Colliders that are in this area")]
+        [SerializeField, Tooltip("This entity will only check Colliders that are in this area, should be 2px wider than the collider")]
         protected Collider collisionCheckRange;
         
         [SerializeField, Tooltip("Can we collide ?")]
@@ -25,64 +25,37 @@ namespace C13.Physics
         #endregion
 
         #region Protected void
-        
-        protected bool CollideWith (Entity other)
-        {
-            float x, y;
 
-            x = Math.Abs((collider.AbsoluteX + collider.AbsoluteSize.x / 2) - (other.collider.AbsoluteX + other.collider.AbsoluteSize.x / 2));
-            y = Math.Abs((collider.AbsoluteY + collider.AbsoluteSize.y / 2) - (other.collider.AbsoluteY + other.collider.AbsoluteSize.y / 2));
-            
-            bool xCheck = x * 2 < (collider.AbsoluteSize.x + other.collider.AbsoluteSize.x);
-            bool yCheck = y * 2 < (collider.AbsoluteSize.y + other.collider.AbsoluteSize.y);
-            
-            return xCheck && yCheck;
-        }
-
-        protected bool CollideWith (Entity other, Vector2 at)
-        {
-            float x, y;
-
-            x = Math.Abs(((int)at.x + collider.AbsoluteSize.x / 2) - (other.collider.AbsoluteX + other.collider.AbsoluteSize.x / 2));
-            y = Math.Abs(((int)at.y + collider.AbsoluteSize.y / 2) - (other.collider.AbsoluteY + other.collider.AbsoluteSize.y / 2));
-            
-            bool xCheck = x * 2 < (collider.AbsoluteSize.x + other.collider.AbsoluteSize.x);
-            bool yCheck = y * 2 < (collider.AbsoluteSize.y + other.collider.AbsoluteSize.y);
-            
-            return xCheck && yCheck;
-        }
-        
-        
         protected T CollideFirst<T> () where T : Entity
         {
             return !Collidable ? null : 
-                (from entity in GameManager.Instance.Tracker.Get<T>(collisionCheckRange) 
+                (from entity in GameManager.Instance.Tracker.GetAllEntitiesInRange(collisionCheckRange) 
                     where entity.Collidable 
                           && entity != this 
-                    where CollideWith(entity) select (T) entity).FirstOrDefault();
+                    where collider.CollideWith(entity.collider) select (T) entity).FirstOrDefault();
         }
         
         protected T CollideFirst<T> (Vector2 at) where T : Entity
         {
             return !Collidable ? null : 
-                (from entity in GameManager.Instance.Tracker.Get<T>(collisionCheckRange) 
+                (from entity in GameManager.Instance.Tracker.GetAllEntitiesInRange(collisionCheckRange) 
                     where entity.Collidable 
                           && entity != this 
-                    where CollideWith(entity, at) select (T) entity).FirstOrDefault();
+                    where collider.CollideWith(entity.collider, at) select (T) entity).FirstOrDefault();
         }
 
         protected bool IsCollidingWith<T> () where T : Entity
         {
-            return Collidable && GameManager.Instance.Tracker.Get<T>(collisionCheckRange)
+            return Collidable && GameManager.Instance.Tracker.GetAllEntitiesInRange(collisionCheckRange) 
                 .Where(entity => entity.Collidable && entity != this)
-                .Any(CollideWith);
+                .Any(entity => collider.CollideWith(entity.collider));
         }
         
         protected bool IsCollidingWith<T> (Vector2 at) where T : Entity
         {
-            return Collidable && GameManager.Instance.Tracker.Get<T>(collisionCheckRange)
+            return Collidable && GameManager.Instance.Tracker.GetAllEntitiesInRange(collisionCheckRange) 
                 .Where(entity => entity.Collidable && entity != this)
-                .Any(entity => CollideWith(entity, at));
+                .Any(entity => collider.CollideWith(entity.collider, at));
         }
         
         #endregion
@@ -116,28 +89,26 @@ namespace C13.Physics
         }
         
         #endregion
+
+        #region Trees Interface
+        
+        public Envelope Envelope
+        {
+            get
+            {
+                Rect coll = (Rect) collider;
+                return new Envelope(coll.xMin, coll.yMin, coll.xMax, coll.yMax);
+            }
+        }
+        
+        public Rect GetBounds ()
+        {
+            return (Rect)collider;
+        }
+        #endregion
     }
 
-    public class EntityBoundsGetter : MBRConverter<Entity>
+    public interface IMovable
     {
-        public double getMinX (Entity item)
-        {
-            return item.collider.AbsoluteX;
-        }
-
-        public double getMinY (Entity item)
-        {
-            return item.collider.AbsoluteY;
-        }
-
-        public double getMaxX (Entity item)
-        {
-            return item.collider.AbsoluteX + item.collider.AbsoluteSize.x;
-        }
-
-        public double getMaxY (Entity item)
-        {
-            return item.collider.AbsoluteY + item.collider.AbsoluteSize.y;
-        }
     }
 }

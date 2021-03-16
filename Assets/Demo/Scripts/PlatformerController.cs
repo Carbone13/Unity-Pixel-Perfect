@@ -25,9 +25,6 @@ public class PlatformerController : Actor2D
 
     private void Update ()
     {
-        //List<Entity> hit = GameManager.Instance.Tracker.qtree.RetrieveObjectsInArea(new Rect(collider.AbsolutePosition.x, collider.AbsolutePosition.y, collider.AbsoluteSize.x, collider.AbsoluteSize.y));
-        //print(hit.Count);
-        
         xInput = Input.GetAxisRaw("Horizontal");
         velocity.x = xInput * MoveSpeed;
         

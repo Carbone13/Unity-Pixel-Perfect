@@ -3,14 +3,22 @@ using System;
 
 namespace C13.Physics
 {
-    public abstract class Actor2D : Entity
+    public abstract class Actor2D : Entity, IMovable
     {
         protected bool Move (Vector2 amount, Action<int, Entity> xCollideCallback = null, Action<int, Entity> yCollideCallback = null)
         {
             bool movedX = MoveX(amount.x, xCollideCallback);
             bool movedY = MoveY(amount.y, yCollideCallback);
 
-            return movedX || movedY;
+            // If we moved
+            if (movedX || movedY)
+            {
+                // The tracker need to be aware of our new position
+                GameManager.Instance.Tracker.RebuildTreeElement(this);
+                return true;
+            }
+            
+            return false;
         }
 
         public bool MoveX (float amount, Action<int, Entity> onCollide)

@@ -1,37 +1,34 @@
-﻿using System;
-using C13.Physics;
-using org.khelekore.prtree;
+﻿using C13.Physics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
+    public static GameManager Instance { get; private set; }
 
-    public static GameManager Instance => _instance;
-
+    public Tracker Tracker;
+    public bool InitializedTracker;
+    
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject);
-        } else 
+            Destroy(gameObject);
+        } 
+        else 
         {
-            _instance = this;
+            Instance = this;
         }
         
         Tracker = new Tracker();
-        Tracker.rtree = new PRTree<Entity>(new EntityBoundsGetter(), Tracker.BranchFactor);
+        Tracker.Initialize();
     }
 
     private void Update ()
     {
         if (!InitializedTracker)
         {
-            Tracker.Initialize();
+            Tracker.StartupBulkLoad();
             InitializedTracker = true;
         }
     }
-
-    public Tracker Tracker;
-    public bool InitializedTracker;
 }

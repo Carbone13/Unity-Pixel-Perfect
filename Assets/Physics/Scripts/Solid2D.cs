@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace C13.Physics
 {
@@ -10,7 +10,7 @@ namespace C13.Physics
 // It's mainly used for Moving Platform, but you don't even need to use the Move() function
 // You can just add this script to a random GameObject and make it a wall.
 // If you want something to move and collide with environment, then look at Actor2D
-    public abstract class Solid2D : Entity
+    public abstract class Solid2D : Entity, IMovable
     {
         private HashSet<Actor2D> riders = new HashSet<Actor2D>();
 
@@ -26,6 +26,11 @@ namespace C13.Physics
 
             Collidable = true;
             riders.Clear();
+
+            if (amount.magnitude != 0)
+            {
+                GameManager.Instance.Tracker.RebuildTreeElement(this);
+            }
         }
         
         private void MoveX (float amount)
@@ -54,10 +59,10 @@ namespace C13.Physics
         {
             transform.position = new Vector2(transform.position.x + amount, transform.position.y);
 
-            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>(collisionCheckRange))
+            foreach (var entity in GameManager.Instance.Tracker.GetMovingInRange<Actor2D>(collisionCheckRange))
             {
                 var actor = (Actor2D) entity;
-                if (CollideWith(actor))
+                if (collider.CollideWith(actor.collider))
                 {
                     actor.ClearRemainderX();
 
@@ -77,10 +82,10 @@ namespace C13.Physics
         {
             transform.position = new Vector2(transform.position.x, transform.position.y + amount);
 
-            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>(collisionCheckRange))
+            foreach (var entity in GameManager.Instance.Tracker.GetMovingInRange<Actor2D>(collisionCheckRange))
             {
                 var actor = (Actor2D) entity;
-                if (CollideWith(actor))
+                if (collider.CollideWith(actor.collider))
                 {
                     actor.ClearRemainderY();
 
@@ -104,7 +109,7 @@ namespace C13.Physics
         
         private void GetRiders ()
         {
-            foreach (var entity in GameManager.Instance.Tracker.Get<Actor2D>(collisionCheckRange))
+            foreach (var entity in GameManager.Instance.Tracker.GetMovingInRange<Actor2D>(collisionCheckRange))
             {
                 var actor = (Actor2D) entity;
                 if (actor.IsRiding(this))
