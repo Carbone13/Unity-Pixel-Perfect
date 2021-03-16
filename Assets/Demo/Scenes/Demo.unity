@@ -243,41 +243,9 @@ Transform:
   - {fileID: 90661247}
   - {fileID: 1547911234}
   - {fileID: 633028901}
-  - {fileID: 58462503}
   - {fileID: 1124712685}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &58462502
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 4068238306754466880}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 58462503}
-  m_Layer: 0
-  m_Name: Obstacle (1) (Missing Prefab)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &58462503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 4068238306754466880}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58462502}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1520986192}
-  m_Father: {fileID: 52836725}
-  m_RootOrder: 11
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &90661246
 GameObject:
@@ -326,11 +294,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -427,7 +397,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &190812760
 GameObject:
@@ -462,11 +432,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -582,11 +554,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -688,11 +662,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -849,7 +825,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &550007076
 GameObject:
@@ -877,12 +853,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550007076}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 20, z: 1}
   m_Children:
   - {fileID: 6109210}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &550007079
 MonoBehaviour:
@@ -891,22 +867,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550007076}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9f0bebcebec4e244804b630f223e5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collider:
     offset: {x: 0, y: 0}
-    size: {x: 1, y: 1}
-    debug: 1
+    size: {x: 0, y: 0}
+    scaleWithTransform: 1
+    debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
-    size: {x: 2, y: 2}
+    size: {x: 12, y: 22}
+    scaleWithTransform: 0
     debug: 1
-    debugColor: {r: 0, g: 1, b: 0, a: 1}
-  Collidable: 1
+    debugColor: {r: 1, g: 0.4814433, b: 0, a: 1}
+  Collidable: 0
   detectedByQtree: []
 --- !u!114 &550007081
 MonoBehaviour:
@@ -915,7 +893,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550007076}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08a59f657d2a475ca13523fb8e07f794, type: 3}
   m_Name: 
@@ -923,11 +901,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 0.7647176, b: 1, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
-    size: {x: 2, y: 2}
+    size: {x: 12, y: 22}
+    scaleWithTransform: 0
     debug: 1
     debugColor: {r: 1, g: 0.3431788, b: 0, a: 1}
   Collidable: 1
@@ -984,11 +964,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1076,11 +1058,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1233,11 +1217,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1288,11 +1274,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1391,7 +1379,7 @@ Transform:
   m_LocalScale: {x: 10, y: 26, z: 1}
   m_Children: []
   m_Father: {fileID: 52836725}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1124712686
 MonoBehaviour:
@@ -1408,11 +1396,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1500,11 +1490,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1576,24 +1568,8 @@ Transform:
   m_LocalScale: {x: 20, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1415574341
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 4068238306754466880}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1520986192}
-  m_Layer: 0
-  m_Name: Missing Prefab (Dummy)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1509914645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,11 +1603,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1700,20 +1678,6 @@ Transform:
   m_Father: {fileID: 52836725}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1520986192
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-  m_PrefabInstance: {fileID: 4068238306754466880}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1415574341}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 58462503}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1547911233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,11 +1725,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1901,7 +1867,7 @@ Transform:
   m_LocalScale: {x: 20, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1860678447
 MonoBehaviour:
@@ -1918,11 +1884,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -1931,36 +1899,6 @@ MonoBehaviour:
   - {x: 50, y: 0, z: 0}
   speed: 10
   cyclic: 0
---- !u!1 &2018323631
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2018323632}
-  m_Layer: 0
-  m_Name: '[Graphy] (Missing Prefab)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2018323632
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2018323631}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2082159466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,11 +1932,13 @@ MonoBehaviour:
   collider:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 0
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   collisionCheckRange:
     offset: {x: 0, y: 0}
     size: {x: 1, y: 1}
+    scaleWithTransform: 1
     debug: 1
     debugColor: {r: 0, g: 1, b: 0, a: 1}
   Collidable: 1
@@ -2067,60 +2007,3 @@ Transform:
   m_Father: {fileID: 52836725}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4068238306754466880
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 52836725}
-    m_Modifications:
-    - target: {fileID: 4068238305233533965, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_Name
-      value: Obstacle (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -29
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4068238305233533968, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 172152007e1c9e8428de660c29b98f49, type: 3}
