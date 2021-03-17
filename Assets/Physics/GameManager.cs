@@ -1,4 +1,5 @@
-﻿using C13.Physics;
+﻿using System;
+using C13.Physics;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -30,5 +31,15 @@ public class GameManager : MonoBehaviour
             Tracker.StartupBulkLoad();
             InitializedTracker = true;
         }
+    }
+
+    private void LateUpdate ()
+    {
+        Tracker.RebuildTree();
+    }
+
+    private void OnDrawGizmos ()
+    {
+        Tracker.movingTree.DrawDebug();
     }
 }

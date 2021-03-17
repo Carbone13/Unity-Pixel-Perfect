@@ -14,7 +14,7 @@ namespace C13.Physics
             if (movedX || movedY)
             {
                 // The tracker need to be aware of our new position
-                GameManager.Instance.Tracker.RebuildTreeElement(this);
+                //GameManager.Instance.Tracker.RebuildTree();
                 return true;
             }
             

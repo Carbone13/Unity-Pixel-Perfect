@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlTypes;
 using UnityEngine;
 using C13.Physics;
 using Random = UnityEngine.Random;
@@ -21,7 +22,7 @@ public class RandomMovement : Actor2D
         transform.position = new Vector2(Random.Range(-170, 170), Random.Range(-80, 80));
     }
 
-    private void FixedUpdate ()
+    private void Update ()
     {
         if (Mode == SystemType.Builtin)
         {
@@ -42,7 +43,7 @@ public class RandomMovement : Actor2D
     private void Custom ()
     {
         direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10)).normalized;
-        Move(direction * speed);
+        Move(direction * speed * Time.deltaTime * 60);
     }
 
 

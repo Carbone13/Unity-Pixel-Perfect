@@ -10,5 +10,7 @@ public class TreeDebugger : Entity
     private void Update ()
     {
         detectedByQtree = GameManager.Instance.Tracker.GetAllEntitiesInRange(collisionCheckRange).ToList();
+        //GameManager.Instance.Tracker.RebuildTreeElement(this);
+        GameManager.Instance.Tracker.AskRebuild();
     }
 }

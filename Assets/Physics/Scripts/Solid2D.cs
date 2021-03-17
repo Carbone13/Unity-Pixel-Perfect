@@ -29,7 +29,7 @@ namespace C13.Physics
 
             if (amount.magnitude != 0)
             {
-                GameManager.Instance.Tracker.RebuildTreeElement(this);
+                //GameManager.Instance.Tracker.RebuildTree();
             }
         }
         

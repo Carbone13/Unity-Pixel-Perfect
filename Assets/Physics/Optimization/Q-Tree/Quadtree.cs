@@ -191,14 +191,14 @@ namespace QTree
 
 		public void DrawDebug ()
 		{
-			Gizmos.DrawLine(new Vector3(m_bounds.x, 0, m_bounds.y),
-				new Vector3(m_bounds.x, 0, m_bounds.y + m_bounds.height));
-			Gizmos.DrawLine(new Vector3(m_bounds.x, 0, m_bounds.y),
-				new Vector3(m_bounds.x + m_bounds.width, 0, m_bounds.y));
-			Gizmos.DrawLine(new Vector3(m_bounds.x + m_bounds.width, 0, m_bounds.y),
-				new Vector3(m_bounds.x + m_bounds.width, 0, m_bounds.y + m_bounds.height));
-			Gizmos.DrawLine(new Vector3(m_bounds.x, 0, m_bounds.y + m_bounds.height),
-				new Vector3(m_bounds.x + m_bounds.width, 0, m_bounds.y + m_bounds.height));
+			Gizmos.DrawLine(new Vector3(m_bounds.x, m_bounds.y, 0),
+				new Vector3(m_bounds.x, m_bounds.y + m_bounds.height, 0));
+			Gizmos.DrawLine(new Vector3(m_bounds.x, m_bounds.y, 0),
+				new Vector3(m_bounds.x + m_bounds.width, m_bounds.y, 0));
+			Gizmos.DrawLine(new Vector3(m_bounds.x + m_bounds.width, m_bounds.y, 0),
+				new Vector3(m_bounds.x + m_bounds.width, m_bounds.y + m_bounds.height, 0));
+			Gizmos.DrawLine(new Vector3(m_bounds.x, m_bounds.y + m_bounds.height, 0),
+				new Vector3(m_bounds.x + m_bounds.width, m_bounds.y + m_bounds.height, 0));
 			if (cells[0] != null)
 			{
 				for (int i = 0; i < cells.Length; i++)

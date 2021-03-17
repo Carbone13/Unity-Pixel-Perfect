@@ -17,7 +17,8 @@ namespace C13.Physics
         // And we use RTree for static entities, as we just have to build the tree one time
         public QuadTree<Entity> movingTree;
         public RTree<Entity> staticTree;
-        
+
+        public bool rebuildAsked;
         #endregion
         
         #region Runtime Lists
@@ -160,7 +161,7 @@ namespace C13.Physics
         
         public void Initialize ()
         {
-            movingTree = new QuadTree<Entity>(4, new Rect(-1000, -1000, 2000, 2000));
+            movingTree = new QuadTree<Entity>(1, new Rect(-1000, -1000, 2000, 2000));
             staticTree = new RTree<Entity>();
         }
 
@@ -174,6 +175,19 @@ namespace C13.Physics
         {
             movingTree.Remove(entity);
             movingTree.Insert(entity);
+        }
+
+        public void RebuildTree ()
+        {
+            movingTree.Clear();
+            foreach(Entity entity in movingEntities) movingTree.Insert(entity);
+
+            rebuildAsked = false;
+        }
+
+        public void AskRebuild ()
+        {
+            rebuildAsked = true;
         }
         #endregion
     }
